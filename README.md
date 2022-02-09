@@ -2,12 +2,15 @@
 Real time collaborative text editor <br/>
 ## Tech stack - MERN <br/>
 ## Other frameworks used: <br/>
-socket.io and yjs - for real time collaboration <br/>
+quilljs and quill-cursors : Editor <br/>
+socket.io and yjs : for real time collaboration <br/>
+## Status <br />
+Collaborative editing done..
+Shows multiple cursors..
 ## To do: <br />
-i) Show multiple cursors <br/>
-ii) Google Sign in (After creating Users Model) <br/>
-iii) Show the list of connected people in the list <br/>
-iv) Show online status <br/>
-v) "X is typing..." on top <br/>
-vi) Design front end
+i) Google Sign in (After creating Users Model) <br/>
+ii) Show the list of connected people in the list <br/>
+iii) Show online status <br/>
+iv) "X is typing..." on top <br/>
+v) Design front end
 

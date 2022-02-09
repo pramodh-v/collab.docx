@@ -15,7 +15,10 @@ export default function Home() {
             docName: docName
         }).then(res => {
             console.log(res);
-            const url = `/doc/${res.data.id}`;
+            const url = `/doc/${res.data.id}/${res.data.user._id}`;
+            // const userDetails = res.data.user;
+            // localStorage.setItem("userDetails",JSON.stringify(userDetails));
+            // localStorage.getItem(JSON.parse("userDetails"));
             navigate(url);
         })
     }
@@ -26,7 +29,10 @@ export default function Home() {
             if(res.data.status === 404){
                 alert("Document not found");
             }
-            const url = `/doc/${res.data.id}`;
+            const url = `/doc/${res.data.id}/${res.data.user._id}`;
+            // const userDetails = res.data.user;
+            // console.log(userDetails);
+            // localStorage.setItem("userDetails",JSON.stringify(userDetails));
             navigate(url);
         }).catch(error => {
             console.log(error);

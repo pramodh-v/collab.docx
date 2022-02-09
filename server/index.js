@@ -40,6 +40,11 @@ io.on('connection', (socket) => {
         socket.on('text-change', (delta,pos) => {
             socket.broadcast.to(docId).emit('fetch-changes',delta,pos);
         });
+
+        socket.on('selection-change', (range,id) => {
+            console.log(range);
+            socket.broadcast.to(docId).emit('fetch-selection',range,id);
+        });
         socket.on('save-doc',async (content) => {
             await Doc.findByIdAndUpdate({_id:docId},{content:content});
         });

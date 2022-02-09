@@ -22,7 +22,7 @@ Router.post('/create', async (req, res) => {
         }
         await doc.editors.push(editor);
         doc.save();
-        res.status(200).send({doc:doc,id:doc._id,message:"Document created"});
+        res.status(200).send({doc:doc,id:doc._id,user:editor,message:"Document created"});
     }
     catch(error){
         res.status(404).send({message:error});
@@ -31,18 +31,22 @@ Router.post('/create', async (req, res) => {
 
 Router.get('/join',async (req,res) => {
     const { name, id } = req.query;
-    // console.log(req.query);
-    // const { name, id } = req.body;
     try{
+        console.log(id);
         const result = await Doc.findOne({_id:id});
         console.log(result);
         if(!result){
             res.status(404).send({message:"Document not found",status:404});
         }
         else{
-            result.editors.push(name);
+            const editor = {
+                _id: uuidv4(),
+                name: name,
+                isOnline: true
+            }
+            result.editors.push(editor);
             result.save();
-            res.status(200).send({doc:result,id:result._id,message:"Joined the document",status:200});
+            res.status(200).send({doc:result,id:result._id,user:editor,message:"Joined the document",status:200});
         }
     }
     catch(error){
