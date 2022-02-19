@@ -21,6 +21,8 @@ const Login = () => {
                 else
                 {
                     console.log(res.data.token);
+                    localStorage.setItem('isAuthenticated',"true");
+                    localStorage.setItem('userToken',res.data.token);
                     navigate('/home');
                     setLoginStatus(true);
                     // setAuth({ token: res.data.token, user: res.data.user });
