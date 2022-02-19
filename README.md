@@ -3,7 +3,7 @@ Real time collaborative text editor <br/>
 ## Tech stack - MERN <br/>
 ## Other frameworks used: <br/>
 quilljs and quill-cursors : Editor <br/>
-socket.io and yjs : for real time collaboration <br/>
+socket.io : for real time collaboration <br/>
 ## Status <br />
 Collaborative editing done..
 Shows multiple cursors..
