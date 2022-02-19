@@ -10,10 +10,14 @@ app.use(cors());
 const dotenv = require('dotenv');
 dotenv.config();
 
-const Router = require('./routes/docRoutes');
-app.use('/api', Router);
+const DocRouter = require('./routes/docRoutes');
+app.use('/api', DocRouter);
+
+const userRouter = require('./routes/userRoutes');
+app.use('/user', userRouter);
 
 const Doc = require('./models/doc');
+const User = require('./models/user');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
