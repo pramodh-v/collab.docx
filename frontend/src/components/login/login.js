@@ -1,5 +1,5 @@
 import React from 'react'
-import { useContext } from 'react';
+import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -8,7 +8,6 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [loginStatus, setLoginStatus] = React.useState(false);
 
     const log = () => {
         Axios.post('http://localhost:5000/user/login', {email:email,password:password})
@@ -21,10 +20,17 @@ const Login = () => {
                 else
                 {
                     console.log(res.data.token);
+                    console.log(res.data.user);
+                    let userDetails = {
+                        _id: res.data.user._id,
+                        username: res.data.user.username,
+                        email: res.data.user.email,
+                        token: res.data.token
+                    }
+                    Cookies.set('userDetails', JSON.stringify(userDetails));
                     localStorage.setItem('isAuthenticated',"true");
                     localStorage.setItem('userToken',res.data.token);
                     navigate('/home');
-                    setLoginStatus(true);
                     // setAuth({ token: res.data.token, user: res.data.user });
                 }
             });

@@ -7,7 +7,7 @@ Router.get('/',async (req,res)=>{
     console.log(req);
 });
 Router.post('/create', async (req, res) => {
-    const { name, docName } = req.body;
+    const { name, userId, docName  } = req.body;
     const doc = new Doc({
         _id: uuidv4(),
         title: docName,
@@ -16,7 +16,7 @@ Router.post('/create', async (req, res) => {
     });
     try{
         const editor = {
-            _id: uuidv4(),
+            _id: userId,
             name: name,
             isOnline: true
         }
@@ -30,7 +30,7 @@ Router.post('/create', async (req, res) => {
 });
 
 Router.get('/join',async (req,res) => {
-    const { name, id } = req.query;
+    const { name, id, userId } = req.query;
     try{
         console.log(id);
         const result = await Doc.findOne({_id:id});
@@ -40,7 +40,7 @@ Router.get('/join',async (req,res) => {
         }
         else{
             const editor = {
-                _id: uuidv4(),
+                _id: userId,
                 name: name,
                 isOnline: true
             }
