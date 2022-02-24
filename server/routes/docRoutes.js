@@ -17,7 +17,7 @@ Router.post('/create', async (req, res) => {
     try{
         const editor = {
             _id: userId,
-            name: name,
+            username: name,
             isOnline: true
         }
         await doc.editors.push(editor);
@@ -32,16 +32,16 @@ Router.post('/create', async (req, res) => {
 Router.get('/join',async (req,res) => {
     const { name, id, userId } = req.query;
     try{
-        console.log(id);
+        // console.log(id);
         const result = await Doc.findOne({_id:id});
-        console.log(result);
+        // console.log(result);
         if(!result){
             res.status(404).send({message:"Document not found",status:404});
         }
         else{
             const editor = {
                 _id: userId,
-                name: name,
+                username: name,
                 isOnline: true
             }
             result.editors.push(editor);
