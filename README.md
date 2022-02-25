@@ -11,6 +11,5 @@ User model implemented...
 Shows the list of connected people..
 Shows if a user is online or not
 ## To do: <br />
-ii) "X is typing..." on top <br/>
-iii) Design front end
+i) Styling left
 
