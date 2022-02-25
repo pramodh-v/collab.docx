@@ -40,8 +40,11 @@ io.on('connection', (socket) => {
         // console.log(userid);
         const user = await User.find({_id:userid});
         socket._id = userid;
-        // console.log(user);
-        socket.broadcast.to(docId).emit('add-new-user',user);
+        console.log("Adding User...")
+        const doc = await Doc.findOne({_id:docId,"editors._id":socket._id});
+        console.log(doc);
+        console.log("-------");
+        socket.broadcast.to(docId).emit('add-new-user',doc.editors);
     });
     
     socket.on("get-doc",async docId => {
@@ -60,16 +63,17 @@ io.on('connection', (socket) => {
         socket.on('save-doc',async (content) => {
             await Doc.findByIdAndUpdate({_id:docId},{content:content});
         });
-        socket.on("disconnect",(reason) => {
+        socket.on("disconnect",async (reason) => {
             console.log(`${socket._id} is disconnecting because..`);
             console.log(reason);
             console.log('-----');
+            const res = await Doc.updateOne({_id:docId,"editors._id":socket._id},{$set: {"editors.$.isOnline":false}});
+            console.log(res);
+            const doc = await Doc.findOne({_id:docId,"editors._id":socket._id});
+            console.log(doc);
             socket.broadcast.to(docId).emit('disconnect-from-doc',socket._id);
         });
     });
-    // socket.on("user-disconnection", async (docId,userid) => {
-    //     socket.emit('disconnect-from-doc',docId,userid);
-    // });
 });
 
 

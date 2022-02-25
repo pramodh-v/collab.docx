@@ -43,7 +43,7 @@ const TextEditor = () => {
       list.innerHTML = "";
       users.forEach((user,index) => {
         const li = document.createElement('li');
-        li.innerHTML = user.username;
+        li.innerHTML = user.username + " " + user.isOnline;
         list.appendChild(li);
       });
       users.forEach((editor,index) => {
@@ -54,13 +54,10 @@ const TextEditor = () => {
     useEffect(() => {
       const Sock = io("http://localhost:6969");
       Sock.on("connect",() => {
-          // Sock.emit("user-connection",docId,userid);
           Sock.emit("add-new-user-others",docId,userid);
       });
       setSocket(Sock);
       return () => {
-        // Sock.emit("user-disconnection",docId,userid);
-        console.log('---');
         Sock.disconnect();
       }
     },[]);
@@ -82,7 +79,6 @@ const TextEditor = () => {
       const helper = function(delta, oldDelta, source) {
         if(source!=='user')
           return;
-        // console.log(cursors);
         socket.emit("text-change",delta,quill.getSelection(),userId);
         socket.emit("save-doc",quill.getContents());
       };
@@ -97,7 +93,6 @@ const TextEditor = () => {
         return;
       const helper = function(delta,pos,id) {
         quill.updateContents(delta);
-        // console.log(cursors);
         cursors.moveCursor(id,pos);
       };
       socket.on('fetch-changes',helper);
@@ -121,7 +116,6 @@ const TextEditor = () => {
       if(!socket||!quill)
         return;
       quill.on('selection-change',(range) => {
-        // console.log(range);
         socket.emit("selection-change",range,userId);
       })
       return () => {
@@ -132,14 +126,9 @@ const TextEditor = () => {
     useEffect(() => {
       if(!users)
         return;
-      const helper = function(user) {
-        let dup = users;
-        if(!users.find(u => u._id===user.id)) {
-          dup.push(user[0]);
-          setUsers(dup);
-          // console.log(users);
-          editorsList(list,users);
-        }
+      const helper = function(editors) {
+        setUsers(editors);
+        editorsList(list,editors);
       };
       socket.on("add-new-user",helper);
       return () => {
@@ -151,18 +140,14 @@ const TextEditor = () => {
       if(!users||!cursors)
         return;
       socket.on('disconnect-from-doc',(userId) => {
-        console.log(userId);
         let dup = users;
         dup.forEach((user,index) => {
-          // console.log(user);
           if(user._id===userId) {
-            dup.splice(index,1);
+            user.isOnline = false;
           }
         });
         setUsers(dup);
-        console.log(users);
         cursors.removeCursor(userId);
-        console.log(cursors);
         editorsList(list,users);
       });
     },[users,cursors]);
