@@ -1,13 +1,33 @@
 import React from 'react'
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+
 import Axios from 'axios';
+
+import styles from './login.module.css';
+
+import { makeStyles,TextField,Button } from '@material-ui/core';
 
 const Login = () => {
     // const { setAuth } = useContext(AuthContext);
     const navigate = useNavigate();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+
+    const useStyles = makeStyles(() => ({
+        textField: {
+          paddingBottom: 20,
+        },
+        input: {
+          color: "white"
+        },
+        loginButton: {
+            backgroundColor: "#00a896",
+            cursor: "pointer",
+        }
+    }));
+
+    const classes = useStyles();
 
     const log = () => {
         Axios.post('http://localhost:5000/user/login', {email:email,password:password})
@@ -36,10 +56,12 @@ const Login = () => {
             });
     }
     return (
-        <div>
-            <input type="text" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}} required/>
-            <input type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}} required/>
-            <button onClick={log}>Login</button>
+        <div className={styles.wrapper}>
+            <div className={styles.loginContainer}>
+                <TextField id="outlined-basic" className={classes.textField} label="Email" onChange={(e)=>{setEmail(e.target.value)}} variant="outlined" required/>
+                <TextField id="outlined-basic" className={classes.textField} label="Password" onChange={(e)=>{setPassword(e.target.value)}} variant="outlined" />
+                <Button onClick={log} variant="contained" color="secondary" className={classes.loginButton}>Login</Button>
+            </div>  
         </div>
     );
 }
