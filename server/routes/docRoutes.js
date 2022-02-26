@@ -44,7 +44,15 @@ Router.get('/join',async (req,res) => {
                 username: name,
                 isOnline: true
             }
-            result.editors.push(editor);
+            console.log(userId);
+            const doc = await Doc.findOne({_id:id,"editors._id":userId});
+            console.log(doc);   
+            if(!doc){
+                result.editors.push(editor);   
+            }
+            else{
+                const res = await Doc.updateOne({_id:id,"editors._id":userId},{$set: {"editors.$.isOnline":true}});
+            }
             result.save();
             res.status(200).send({doc:result,id:result._id,user:editor,message:"Joined the document",status:200});
         }
