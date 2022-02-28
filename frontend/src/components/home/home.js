@@ -2,8 +2,25 @@ import React,{ useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import styles from "./home.module.css";
+import { makeStyles,TextField,Button,Typography } from "@material-ui/core";
 
 export default function Home() {
+
+    const useStyles = makeStyles(() => ({
+        textField: {
+          paddingBottom: 20,
+        },
+        input: {
+          color: "white"
+        },
+        button: {
+            backgroundColor: "#00a896",
+            cursor: "pointer",
+        }
+    }));
+    const classes = useStyles();
+
     const navigate = useNavigate();
 
     const [docName,setDocname] = useState("");
@@ -45,17 +62,16 @@ export default function Home() {
     }
     
     return (
-        <div className="home">
-            {console.log("Home")}
-            <div className="create_container">
+        <div className={styles.wrapper}>
+            <div className={styles.createContainer}>
                 <h1>Create</h1>
-                <input type="text" placeholder="Create a new document" onChange={(e) => {setDocname(e.target.value)}}/>
-                <button onClick={create}>Create</button>
+                <TextField id="outlined-basic" className={classes.textField} label="Document Name" onChange={(e)=>{setDocname(e.target.value)}} variant="outlined" required/>
+                <Button onClick={create} variant="contained" color="secondary" className={classes.button}>Create</Button>
             </div>
-            <div className="join_container">
+            <div className={styles.joinContainer}>
                 <h1>Join</h1>
-                <input type="text" placeholder="Enter your Code" onChange={(e) => {setLink(e.target.value)}}/>
-                <button onClick={join}>Join</button>
+                <TextField id="outlined-basic" className={classes.textField} label="Document Code" onChange={(e)=>{setLink(e.target.value)}} variant="outlined" required/>
+                <Button onClick={join} variant="contained" color="secondary" className={classes.button}>Join</Button>
             </div>
         </div>
     );

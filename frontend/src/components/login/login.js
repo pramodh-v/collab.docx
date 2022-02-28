@@ -6,7 +6,7 @@ import Axios from 'axios';
 
 import styles from './login.module.css';
 
-import { makeStyles,TextField,Button } from '@material-ui/core';
+import { makeStyles,TextField,Button,Typography } from '@material-ui/core';
 
 const Login = () => {
     // const { setAuth } = useContext(AuthContext);
@@ -57,6 +57,7 @@ const Login = () => {
     }
     return (
         <div className={styles.wrapper}>
+            {/* <h1>Collab.docx</h1> */}
             <div className={styles.loginContainer}>
                 <TextField id="outlined-basic" className={classes.textField} label="Email" onChange={(e)=>{setEmail(e.target.value)}} variant="outlined" required/>
                 <TextField id="outlined-basic" className={classes.textField} label="Password" onChange={(e)=>{setPassword(e.target.value)}} variant="outlined" />

@@ -36,12 +36,41 @@
     transform: rotate(360deg);
   }
 }
-.ql-editor{
-   min-height: 500px;
+
+/* Quill Styling */
+.quill-wrapper{
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  background-color: #f3f3f3;
+}
+.editor-container .ql-editor{
+  width: 8.5in;
+  min-height: 11in;
+  padding: 1in;
+  margin: 1rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  background-color: white;
  }
  .title-container-for-doc{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     text-align: center;
  }
+.ql-container.ql-snow{
+  border:none;
+  display:flex;
+  justify-content: center;
+}
+.ql-toolbar.ql-snow{
+  display:flex;
+  justify-content: center;
+  position: sticky;
+  background-color: white;
+  border: 1px solid black;
+  top:0;
+  z-index: 1;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+}

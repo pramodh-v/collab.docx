@@ -7,6 +7,7 @@ import '../../App.js';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { Fab,makeStyles } from '@material-ui/core';
 
 Quill.register('modules/cursors', QuillCursors);
 
@@ -26,10 +27,52 @@ const modules = {
     ],
 }
 const TextEditor = () => {
+  const useStyles = makeStyles(() => ({
+    fab: {
+      position: 'fixed', 
+      bottom: '50%',
+      right: '20px',
+      backgroundColor: '#00a896',
+      color: 'white',
+      '&:hover': {
+        backgroundColor: 'secondary',
+        color: 'white',
+      },
+    },
+    editors: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+      width: '100%',
+      transition: 'all 0.5s',
+    },
+    docLink: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px',
+      width: '50%',
+      margin: '0 auto',
+      backgroundColor: '#d0d0d0',
+      '&:hover': {
+        backgroundColor: '#e0e0e0',
+      },
+    },
+    circle: {
+      fontSize: '5px',
+    }
+  }));
+  const classes = useStyles();
+
     const [socket,setSocket] = useState();
     const [quill,setQuill] = useState();
     const [cursors,setCursors] = useState();
     const [users,setUsers] = useState();
+    const [isCopied,setIsCopied] = useState(false);
+    const [docName,setDocName] = useState();
 
     const userDetails = JSON.parse(Cookies.get('userDetails'));
     const userid = userDetails._id;
@@ -38,16 +81,18 @@ const TextEditor = () => {
     const colors = ["red","blue","pink","green","yellow","orange"];
 
     const list = document.getElementById('editors-list');
-
     const editorsList = (list,users) => {
       list.innerHTML = "";
       users.forEach((user,index) => {
         const li = document.createElement('li');
-        li.innerHTML = user.username + " " + user.isOnline;
+        li.style.listStyleType = 'none';
+        li.style.margin = '0';
+        li.style.padding = '10px';
+        li.innerHTML = "<span style='font-size:10px'>"+(`${user.isOnline}`?'🟢':'🔴')+"</span>"+`${user.username}`;
         list.appendChild(li);
       });
       users.forEach((editor,index) => {
-        cursors.createCursor(editor._id,editor.name,colors[index%colors.length]);
+        cursors.createCursor(editor._id,editor.username,colors[index%colors.length]);
       });
     }
     // Initialise Socket
@@ -66,6 +111,7 @@ const TextEditor = () => {
       if(!socket||!quill||!cursors)
         return;
       socket.once("load-doc",(document) => {
+        setDocName(document.title);
         quill.setContents(document.content);  
         setUsers(document.editors);
         editorsList(list,document.editors);
@@ -169,12 +215,18 @@ const TextEditor = () => {
       q.focus();
     },[]);
   return (
-    <div className="wrapper">
+    <div className="quill-wrapper">
       <div className="title-container-for-doc">
-        <h3>Text Editor</h3>
+        <h1>{docName}</h1>
       </div>
-      <div id="editors-list"></div>
+      <div className={classes.docLink} onClick={() => {navigator.clipboard.writeText(docId);setIsCopied(true);}}>
+        <p>{(!isCopied)?"Click on the code to copy it to the clipboard!":"Copied"}</p>
+        <h3>{docId}</h3></div>
+      <div className={classes.editors} id="editors-list"></div>
       <div className="editor-container" ref={x}></div>
+      {/* <Fab className={classes.fab} onClick={() => { if(!showEditors){setShowEditors(true);}else{setShowEditors(false);} console.log(showEditors);}}>
+      <img src={require("./users.png")} alt="logo" className="logo"/>
+      </Fab> */}
     </div>
   )
 }
