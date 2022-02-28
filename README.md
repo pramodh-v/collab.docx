@@ -4,13 +4,11 @@
 ## Other frameworks used: <br/>
 quilljs and quill-cursors : Editor <br/>
 socket.io : for real time collaboration <br/>
-## Status <br />
-Collaborative editing done..
-Shows multiple cursors..
-User model implemented...
-Shows the list of connected people..
-Shows if a user is online or not
-Roush Styling Done <br />
+## Features <br />
+Collaborative Editing.. <br />
+Shows multiple cursors.. <br />
+Shows list of connected people and their online status <br />
+<br />
 ## Screenshots <br />
 Register Page <br />
 <img width="960" alt="image" src="https://user-images.githubusercontent.com/62897899/156000337-f860e766-c112-4dc0-9ad7-494187ef351a.png"> <br />
