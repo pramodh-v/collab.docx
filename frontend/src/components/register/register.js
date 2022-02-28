@@ -48,7 +48,7 @@ const Register = () => {
             <div className={styles.loginContainer}>
             <TextField id="outlined-basic" className={classes.textField} label="Username" onChange={(e)=>{setUsername(e.target.value)}} variant="outlined" required/>
                 <TextField id="outlined-basic" className={classes.textField} label="Email" onChange={(e)=>{setEmail(e.target.value)}} variant="outlined" required/>
-                <TextField id="outlined-basic" className={classes.textField} label="Password" onChange={(e)=>{setPassword(e.target.value)}} variant="outlined" />
+                <TextField id="outlined-basic" className={classes.textField} type="password" label="Password" onChange={(e)=>{setPassword(e.target.value)}} variant="outlined" />
                 <Button onClick={log} variant="contained" color="secondary" className={classes.regButton}>Register</Button>
             </div>  
         </div>

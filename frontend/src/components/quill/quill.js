@@ -125,7 +125,7 @@ const TextEditor = () => {
       const helper = function(delta, oldDelta, source) {
         if(source!=='user')
           return;
-        socket.emit("text-change",delta,quill.getSelection(),userId);
+        socket.emit("text-change",delta,quill.getSelection(),userid);
         socket.emit("save-doc",quill.getContents());
       };
       quill.on('text-change',helper);
@@ -162,7 +162,7 @@ const TextEditor = () => {
       if(!socket||!quill)
         return;
       quill.on('selection-change',(range) => {
-        socket.emit("selection-change",range,userId);
+        socket.emit("selection-change",range,userid);
       })
       return () => {
         quill.off('selection-change');

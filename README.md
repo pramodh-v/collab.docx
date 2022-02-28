@@ -10,6 +10,14 @@ Shows multiple cursors..
 User model implemented...
 Shows the list of connected people..
 Shows if a user is online or not
-## To do: <br />
-i) Styling left
+Roush Styling Done <br />
+## Screenshots <br />
+Register Page
+Login Page
+Home
+Creating Doc
+Join Doc
+Simultaneous Editing
+
+
 
