@@ -90,6 +90,7 @@ const TextEditor = () => {
         li.style.padding = '10px';
         li.innerHTML = "<span style='font-size:10px'>"+(`${user.isOnline}`?'🟢':'🔴')+"</span>"+`${user.username}`;
         list.appendChild(li);
+        console.log(user.username + user.isOnline);
       });
       users.forEach((editor,index) => {
         cursors.createCursor(editor._id,editor.username,colors[index%colors.length]);

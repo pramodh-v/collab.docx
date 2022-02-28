@@ -65,7 +65,6 @@
   justify-content: center;
 }
 .ql-toolbar.ql-snow{
-  display:flex;
   justify-content: center;
   position: sticky;
   background-color: white;
